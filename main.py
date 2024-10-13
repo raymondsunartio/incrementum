@@ -150,24 +150,25 @@ async def main():
                         print(f"{indicator_value: 8.4f} ", end="")
                 print("\n", end="")
 
-                if overbought_count >= 3:
-                    discord_webhook.send(
-                        f"{_ccy_pair} OVERBOUGHT\n"
-                        f"    W: {_ccy_pair_data['W']['overbought']} [{_ccy_pair_data['W']['value']: 8.4f}]\n"
-                        f"    D: {_ccy_pair_data['D']['overbought']} [{_ccy_pair_data['D']['value']: 8.4f}]\n"
-                        f"   H4: {_ccy_pair_data['H4']['overbought']} [{_ccy_pair_data['H4']['value']: 8.4f}]\n"
-                        f"   H1: {_ccy_pair_data['H1']['overbought']} [{_ccy_pair_data['H1']['value']: 8.4f}]\n"
-                        f"  M15: {_ccy_pair_data['M15']['overbought']} [{_ccy_pair_data['M15']['value']: 8.4f}]\n"
-                    )
-                if oversold_count >= 3:
-                    discord_webhook.send(
-                        f"{_ccy_pair} OVERSOLD\n"
-                        f"    W: {_ccy_pair_data['W']['oversold']} [{_ccy_pair_data['W']['value']: 8.4f}]\n"
-                        f"    D: {_ccy_pair_data['D']['oversold']} [{_ccy_pair_data['D']['value']: 8.4f}]\n"
-                        f"   H4: {_ccy_pair_data['H4']['oversold']} [{_ccy_pair_data['H4']['value']: 8.4f}]\n"
-                        f"   H1: {_ccy_pair_data['H1']['oversold']} [{_ccy_pair_data['H1']['value']: 8.4f}]\n"
-                        f"  M15: {_ccy_pair_data['M15']['oversold']} [{_ccy_pair_data['M15']['value']: 8.4f}]\n"
-                    )
+                if settings.DISCORD_NOTIFICATION_ENABLED:
+                    if overbought_count >= 3:
+                        discord_webhook.send(
+                            f"{_ccy_pair} OVERBOUGHT\n"
+                            f"    W: {_ccy_pair_data['W']['overbought']} [{_ccy_pair_data['W']['value']: 8.4f}]\n"
+                            f"    D: {_ccy_pair_data['D']['overbought']} [{_ccy_pair_data['D']['value']: 8.4f}]\n"
+                            f"   H4: {_ccy_pair_data['H4']['overbought']} [{_ccy_pair_data['H4']['value']: 8.4f}]\n"
+                            f"   H1: {_ccy_pair_data['H1']['overbought']} [{_ccy_pair_data['H1']['value']: 8.4f}]\n"
+                            f"  M15: {_ccy_pair_data['M15']['overbought']} [{_ccy_pair_data['M15']['value']: 8.4f}]\n"
+                        )
+                    if oversold_count >= 3:
+                        discord_webhook.send(
+                            f"{_ccy_pair} OVERSOLD\n"
+                            f"    W: {_ccy_pair_data['W']['oversold']} [{_ccy_pair_data['W']['value']: 8.4f}]\n"
+                            f"    D: {_ccy_pair_data['D']['oversold']} [{_ccy_pair_data['D']['value']: 8.4f}]\n"
+                            f"   H4: {_ccy_pair_data['H4']['oversold']} [{_ccy_pair_data['H4']['value']: 8.4f}]\n"
+                            f"   H1: {_ccy_pair_data['H1']['oversold']} [{_ccy_pair_data['H1']['value']: 8.4f}]\n"
+                            f"  M15: {_ccy_pair_data['M15']['oversold']} [{_ccy_pair_data['M15']['value']: 8.4f}]\n"
+                        )
 
             print("\n", end="")
         print(f"Last updated: {now.strftime('%Y-%m-%d %H:%M:%S')}")
