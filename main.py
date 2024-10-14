@@ -140,7 +140,35 @@ async def main():
                 overbought_1_count = 0
                 oversold_count = 0
                 oversold_1_count = 0
-                print(f"{_ccy_pair} ", end="")
+
+                any_overbought = (
+                    any(
+                        tuple([
+                            _ccy_pair_data[_time_frame]["overbought"] for _time_frame in TimeFrame
+                        ])
+                        + tuple([
+                            _ccy_pair_data[_time_frame]["overbought_1"] for _time_frame in TimeFrame
+                        ])
+                    )
+                )
+                any_oversold = (
+                    any(
+                        tuple([
+                            _ccy_pair_data[_time_frame]["oversold"] for _time_frame in TimeFrame
+                        ])
+                        + tuple([
+                            _ccy_pair_data[_time_frame]["oversold_1"] for _time_frame in TimeFrame
+                        ])
+                    )
+                )
+
+                if any_overbought:
+                    print(Color.RED + f"{_ccy_pair}" + Color.ENDC + " ", end="")
+                elif any_oversold:
+                    print(Color.GREEN + f"{_ccy_pair}" + Color.ENDC + " ", end="")
+                else:
+                    print(f"{_ccy_pair} ", end="")
+
                 for _time_frame in TimeFrame:
                     indicator_value = _ccy_pair_data[_time_frame]["value"]
                     indicator_overbought = _ccy_pair_data[_time_frame]["overbought"]
