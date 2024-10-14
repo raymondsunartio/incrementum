@@ -6,6 +6,7 @@ services:
         PIPENV_INSTALL_ARGS: --system --deploy
     image: incrementum
     command: python main.py
+    restart: always
     extra_hosts:
       - host.docker.internal:host-gateway
     volumes:
