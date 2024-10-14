@@ -186,6 +186,15 @@ async def main():
                             f"   H1: {_ccy_pair_data['H1']['overbought']} [{_ccy_pair_data['H1']['value']: 8.4f}]\n"
                             f"  M15: {_ccy_pair_data['M15']['overbought']} [{_ccy_pair_data['M15']['value']: 8.4f}]\n"
                         )
+                    if overbought_1_count >= 3:
+                        discord_webhook.send(
+                            f"{_ccy_pair} OVERBOUGHT 1\n"
+                            f"    W: {_ccy_pair_data['W']['overbought_1']} [{_ccy_pair_data['W']['value_1']: 8.4f}]\n"
+                            f"    D: {_ccy_pair_data['D']['overbought_1']} [{_ccy_pair_data['D']['value_1']: 8.4f}]\n"
+                            f"   H4: {_ccy_pair_data['H4']['overbought_1']} [{_ccy_pair_data['H4']['value_1']: 8.4f}]\n"
+                            f"   H1: {_ccy_pair_data['H1']['overbought_1']} [{_ccy_pair_data['H1']['value_1']: 8.4f}]\n"
+                            f"  M15: {_ccy_pair_data['M15']['overbought_1']} [{_ccy_pair_data['M15']['value_1']: 8.4f}]\n"
+                        )
                     if oversold_count >= 3:
                         discord_webhook.send(
                             f"{_ccy_pair} OVERSOLD\n"
@@ -194,6 +203,15 @@ async def main():
                             f"   H4: {_ccy_pair_data['H4']['oversold']} [{_ccy_pair_data['H4']['value']: 8.4f}]\n"
                             f"   H1: {_ccy_pair_data['H1']['oversold']} [{_ccy_pair_data['H1']['value']: 8.4f}]\n"
                             f"  M15: {_ccy_pair_data['M15']['oversold']} [{_ccy_pair_data['M15']['value']: 8.4f}]\n"
+                        )
+                    if oversold_1_count >= 3:
+                        discord_webhook.send(
+                            f"{_ccy_pair} OVERSOLD 1\n"
+                            f"    W: {_ccy_pair_data['W']['oversold_1']} [{_ccy_pair_data['W']['value_1']: 8.4f}]\n"
+                            f"    D: {_ccy_pair_data['D']['oversold_1']} [{_ccy_pair_data['D']['value_1']: 8.4f}]\n"
+                            f"   H4: {_ccy_pair_data['H4']['oversold_1']} [{_ccy_pair_data['H4']['value_1']: 8.4f}]\n"
+                            f"   H1: {_ccy_pair_data['H1']['oversold_1']} [{_ccy_pair_data['H1']['value_1']: 8.4f}]\n"
+                            f"  M15: {_ccy_pair_data['M15']['oversold_1']} [{_ccy_pair_data['M15']['value_1']: 8.4f}]\n"
                         )
 
             print("\n", end="")
