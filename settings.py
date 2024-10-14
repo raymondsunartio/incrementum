@@ -22,8 +22,8 @@ CCY_PAIRS = (
 
 INDICATOR_THRESHOLD = {
     "rsi": {
-        "overbought": 68,
-        "oversold": 32,
+        "overbought": 70,
+        "oversold": 30,
     },
 }
 

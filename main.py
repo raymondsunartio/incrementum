@@ -106,11 +106,17 @@ async def main():
 
         async with channel:
             async for data in channel:
-                rsi = indicators.get_rsi(data["candles"], lookback_periods=13)[-1].rsi
+                rsi_result = indicators.get_rsi(data["candles"], lookback_periods=13)
+                rsi_result_len = len(rsi_result)
+                rsi = rsi_result[rsi_result_len - 1].rsi
+                rsi_1 = rsi_result[rsi_result_len - 2].rsi
                 stats["rsi"][data["ccy_pair"]][data["time_frame"]] = {
                     "value": rsi,
                     "overbought": True if rsi >= settings.INDICATOR_THRESHOLD["rsi"]["overbought"] else False,
                     "oversold": True if rsi <= settings.INDICATOR_THRESHOLD["rsi"]["oversold"] else False,
+                    "value_1": rsi_1,
+                    "overbought_1": True if rsi_1 >= settings.INDICATOR_THRESHOLD["rsi"]["overbought"] else False,
+                    "oversold_1": True if rsi_1 <= settings.INDICATOR_THRESHOLD["rsi"]["oversold"] else False,
                 }
 
         async with httpx.AsyncClient() as client:
@@ -126,28 +132,48 @@ async def main():
             print(37 * "-" + Color.BOLD + f" {indicator.upper()} " + Color.ENDC + 38 * "-")
             print(8 * " ", end="")
             for _time_frame in TimeFrame:
-                print(f"| {_time_frame.value:>8s} ", end="")
+                print(f"| {_time_frame.value:>17s} ", end="")
             print("\n", end="")
             for _ccy_pair in settings.CCY_PAIRS:
                 _ccy_pair_data = indicator_data[_ccy_pair]
                 overbought_count = 0
+                overbought_1_count = 0
                 oversold_count = 0
+                oversold_1_count = 0
                 print(f"{_ccy_pair} ", end="")
                 for _time_frame in TimeFrame:
                     indicator_value = _ccy_pair_data[_time_frame]["value"]
                     indicator_overbought = _ccy_pair_data[_time_frame]["overbought"]
                     indicator_oversold = _ccy_pair_data[_time_frame]["oversold"]
+                    indicator_value_1 = _ccy_pair_data[_time_frame]["value_1"]
+                    indicator_overbought_1 = _ccy_pair_data[_time_frame]["overbought_1"]
+                    indicator_oversold_1 = _ccy_pair_data[_time_frame]["oversold_1"]
+
                     if indicator_overbought:
                         overbought_count += 1
                     if indicator_oversold:
                         oversold_count += 1
+                    if indicator_overbought_1:
+                        overbought_1_count += 1
+                    if indicator_oversold_1:
+                        oversold_1_count += 1
+
                     print("| ", end="")
+
+                    if indicator_overbought_1:
+                        print(Color.RED + f"{indicator_value_1: 8.4f}" + Color.ENDC + " ", end="")
+                    elif indicator_oversold_1:
+                        print(Color.GREEN + f"{indicator_value_1: 8.4f}" + Color.ENDC + " ", end="")
+                    else:
+                        print(f"{indicator_value_1: 8.4f} ", end="")
+
                     if indicator_overbought:
                         print(Color.RED + f"{indicator_value: 8.4f}" + Color.ENDC + " ", end="")
                     elif indicator_oversold:
                         print(Color.GREEN + f"{indicator_value: 8.4f}" + Color.ENDC + " ", end="")
                     else:
                         print(f"{indicator_value: 8.4f} ", end="")
+
                 print("\n", end="")
 
                 if settings.DISCORD_NOTIFICATION_ENABLED:
