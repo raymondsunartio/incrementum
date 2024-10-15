@@ -120,10 +120,10 @@ async def main():
                 }
 
         async with httpx.AsyncClient() as client:
-            response = await client.get("http://worldtimeapi.org/api/timezone/Australia/Adelaide")
+            response = await client.get("https://timeapi.io/api/time/current/zone?timeZone=Australia%2FAdelaide")
         response.raise_for_status()
         response_json = response.json()
-        now = dateutil.parser.parse(response_json["datetime"])
+        now = dateutil.parser.parse(response_json["dateTime"])
 
         discord_webhook = SyncWebhook.from_url(settings.DISCORD_WEBHOOK_URL)
 
