@@ -11,6 +11,8 @@ CCY_PAIRS = (
     "AUD_NZD",
     "AUD_USD",
     "AUD_CHF",
+    "EUR_JPY",
+    "EUR_USD",
     "NZD_CAD",
     "NZD_JPY",
     "NZD_USD",
